@@ -22,7 +22,38 @@ app.listen(3000, () => {
 })
 
 app.get("/", (req, res) => {
-  return res.json({ message: "Criando APIs em Node.js" });
+  Artigo.find({}).then((artigos) => {
+    return res.json(artigos);
+  }).catch((error) => {
+    return res.status(400).json({
+      error: true,
+      message: "Falha ao listar artigos"
+    })
+  })
+})
+
+app.get("/artigo/:id", (req, res) => {
+  Artigo.findOne({ _id: req.params.id }).then((artigo) => {
+    return res.json(artigo);
+  }).catch((error) => {
+    return res.json({
+      error: true,
+      message: "Falha ao localizar registro"
+    })
+  })
+})
+
+app.put("/artigo/:id", (req, res) => {
+  const artigo = Artigo.updateOne({ _id: req.params.id }, req.body, (error) => {
+    if (error) return res.status(400).json({
+      error: true,
+      message: "Erro ao atualizar artigo"
+    })
+
+    return res.json({
+      message: "Artigo atualizado com sucesso!"
+    })
+  })
 })
 
 app.post("/artigos", (req, res) => {
