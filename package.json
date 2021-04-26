@@ -12,5 +12,8 @@
     "JavaScript"
   ],
   "author": "Valdir Cezar",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
