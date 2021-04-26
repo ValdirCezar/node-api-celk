@@ -13,7 +13,7 @@ app.use(express.json());
 app.use((req, res, next) => {
   //Qual site tem permissão de realizar a conexão, no exemplo abaixo está o "*" indicando que qualquer site pode fazer a conexão
   res.header("Access-Control-Allow-Origin", "*");
-  
+
   //Quais são os métodos que a conexão pode realizar na API
   res.header("Access-Control-Allow-Methods", 'GET,PUT,POST,DELETE');
   app.use(cors());
@@ -33,6 +33,7 @@ app.listen(3000, () => {
   console.log("Server is running on port 3000...")
 })
 
+// ------ GET-ALL -------
 app.get("/", (req, res) => {
   Artigo.find({}).then((artigos) => {
     return res.json(artigos);
@@ -44,6 +45,7 @@ app.get("/", (req, res) => {
   })
 })
 
+// ------ GET -------
 app.get("/artigo/:id", (req, res) => {
   Artigo.findOne({ _id: req.params.id }).then((artigo) => {
     return res.json(artigo);
@@ -55,6 +57,7 @@ app.get("/artigo/:id", (req, res) => {
   })
 })
 
+// ------ PUT -------
 app.put("/artigo/:id", (req, res) => {
   Artigo.updateOne({ _id: req.params.id }, req.body, (error) => {
     if (error) return res.status(400).json({
@@ -68,6 +71,7 @@ app.put("/artigo/:id", (req, res) => {
   })
 })
 
+// ------ PUT -------
 app.post("/artigos", (req, res) => {
   Artigo.create(req.body, (err) => {
     if (err) return res.status(400).json({
@@ -82,6 +86,7 @@ app.post("/artigos", (req, res) => {
   })
 })
 
+// ------ DELETE -------
 app.delete("/artigo/:id", (req, res) => {
   Artigo.deleteOne({ _id: req.params.id }, ((error) => {
     if (error) return res.status(400).json({
