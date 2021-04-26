@@ -1,12 +1,24 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 require('./models/Artigo');
-const Artigo = mongoose.model('artigo');
 
+const Artigo = mongoose.model('artigo');
 const app = express();
 
+app.use(cors());
 app.use(express.json());
+
+app.use((req, res, next) => {
+  //Qual site tem permissão de realizar a conexão, no exemplo abaixo está o "*" indicando que qualquer site pode fazer a conexão
+  res.header("Access-Control-Allow-Origin", "*");
+  
+  //Quais são os métodos que a conexão pode realizar na API
+  res.header("Access-Control-Allow-Methods", 'GET,PUT,POST,DELETE');
+  app.use(cors());
+  next();
+});
 
 mongoose.connect('mongodb://localhost/node-api', {
   useNewUrlParser: true,
