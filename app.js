@@ -44,7 +44,7 @@ app.get("/artigo/:id", (req, res) => {
 })
 
 app.put("/artigo/:id", (req, res) => {
-  const artigo = Artigo.updateOne({ _id: req.params.id }, req.body, (error) => {
+  Artigo.updateOne({ _id: req.params.id }, req.body, (error) => {
     if (error) return res.status(400).json({
       error: true,
       message: "Erro ao atualizar artigo"
@@ -57,7 +57,7 @@ app.put("/artigo/:id", (req, res) => {
 })
 
 app.post("/artigos", (req, res) => {
-  const artigo = Artigo.create(req.body, (err) => {
+  Artigo.create(req.body, (err) => {
     if (err) return res.status(400).json({
       error: true,
       message: "Erro ao cadastrar artigo"
@@ -67,5 +67,19 @@ app.post("/artigos", (req, res) => {
       error: false,
       message: "Artigo cadastado com sucesso!"
     })
-  });
+  })
+})
+
+app.delete("/artigo/:id", (req, res) => {
+  Artigo.deleteOne({ _id: req.params.id }, ((error) => {
+    if (error) return res.status(400).json({
+      error: true,
+      message: "Erro ao deletar artigo"
+    })
+
+    return res.json({
+      error: false,
+      message: "Artigo deletado com sucesso!"
+    })
+  }))
 })
