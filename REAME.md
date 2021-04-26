@@ -17,3 +17,7 @@ npm install --save mongodb
 
 // Instalar mongose
 npm install --save mongoose
+
+// Instalar cors
+npm install --save cors
+
